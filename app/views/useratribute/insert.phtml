@@ -1,0 +1,124 @@
+<style>
+	.inputNew {
+		border: 1px solid #c0c0c0;
+		color: #000000;
+		font-size: 12px;
+		font-weight: bold;
+		margin-bottom: 0;
+		margin-left: 0;
+		margin-right: 0;
+		margin-top: 5px !important;
+		padding: 5px;
+	}
+
+	p {
+		width: 100px;
+		float: left;
+		margin-left: 10px;
+		font-weight: bold;
+	}
+
+</style>
+<script>
+	$(document).ready(function () {
+		$('.update_lai').click(function () {
+			var gt = $(this).attr('value');
+			var div = $(this).attr('thisdiv');
+			var id = $(this).attr('idOf');
+			var user = $(this).attr('user');
+
+			var info = {'id': id, 'value': gt, 'user': user};
+			console.log(info);
+			var url = 'http://local.tutorial/UserAtribute/xoa';
+			if (confirm("Are you sure to delete?")) {
+				$.ajax({
+					type: 'POST',
+					url: url,
+					data: info,
+					success: function () {
+						$('#div_' + div).remove();
+					}
+				})
+			}
+		})
+
+	})
+</script>
+<?php if (count($listAttr)) { ?>
+	<span class="title">List data</span>
+	<span class="controller" style="float: right;">
+                    </span>
+	</div>
+	<br class="clear">
+	<div class="content" id="page">
+		<form method="post" action="" name="form_data" class="form_product_create" enctype="multipart/form-data">
+			<div id="view">
+				<table width="100%" cellspacing="0" cellpadding="0" class="data">
+					<thead>
+					<tr>
+						<?php foreach ($listAttr as $list) { ?>
+							<th style="width:20%"><?php echo $list->name ?></th>
+						<?php } ?>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<?php foreach ($listAttr as $list) { ?>
+							<td class="tdFirst" id="<?php echo 'td' . $list->idkey; ?>">
+								<a class="add_images"
+								   filename= <?php echo $list->name ?> id="<?php echo $list->idkey; ?>" sl="1"
+								   rel="<?php echo $list->idkey; ?>">Add
+									File ||</a>
+
+								<a class="add_text"
+								   filename= <?php echo $list->name ?> id="<?php echo $list->idkey; ?>" sl="1"
+								   rel="<?php echo $list->idkey; ?>">Add
+									Text</a>
+							</td>
+						<?php } ?>
+					</tr>
+					<tr>
+						<?php foreach ($listAttr as $list) { ?>
+							<td>
+								<?php
+								if ($value != null) {
+									foreach ($value as $key) {
+										foreach ($key as $kk => $vv) {
+											if ($kk == $list->idkey) {
+												$x = explode(',', $vv);
+												$i = 1;
+												foreach ($x as $gt) {
+													?>
+													<div id= <?php echo 'div_' . $list->idkey . '_' . $i ?>>
+														<a href="<?php echo $url ?>users/downd?file=<?php echo $gt ?>"><?php echo $gt ?></a>
+														<a style="
+														color:
+														red" user= <?php echo $user ?> thisdiv =
+														"<?php echo $list->idkey . '_' . $i ?>" idOf =
+														"<?php echo $list->idkey ?>"
+														value="<?php echo $gt ?>" class='update_lai'><img src="/images/icon_delete.png" alt="delete" class="help" title="delete"></a>
+													</div>
+													<?php
+													$i++;
+												}
+											}
+										}
+									}
+								}
+								?>
+								<div class="display" id="<?php echo $list->idkey; ?>showFile"
+								     rel="<?php echo $list->idkey; ?>">
+									<div class="add_file<?php echo $list->idkey; ?>"></div>
+									<div class="add_text<?php echo $list->idkey; ?>"></div>
+								</div>
+
+							</td>
+						<?php } ?>
+					</tr>
+					</tbody>
+				</table>
+				<?= $this->tag->submitButton(array("name" => "submit", 'value' => 'Done')) ?>
+			</div>
+		</form>
+	</div>
+<?php } else echo 'NO DATA'; ?>

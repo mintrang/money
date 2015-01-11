@@ -1,0 +1,98 @@
+<style>
+	table.data input {
+		background: none !important;
+		border: 1px solid #ffffff !important;
+		outline: none;
+	}
+</style>
+<script>
+	$(document).ready(function () {
+		$('.change').live("change", function () {
+			var value = $(this).val();
+			var key = $(this).attr('id');
+			var url = "http://local.tutorial/group/edit";
+			var info = {'value': value, 'key': key}
+			console.log(info);
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: info,
+				success: function (kq) {
+				}
+			});
+		});
+		$(".detele_group").live("click", function () {
+			var del_id = $(this).attr("del_id");
+			var info = {'id': del_id};
+			var url = "http://local.tutorial/group/delete";
+			console.log("delete: tr" + del_id);
+			if (confirm("Are you sure to delete?")) {
+				$.ajax({
+					type: "POST",
+					url: url,
+					data: info,
+					success: function (kq) {
+						console.log("kq" + kq);
+						$("#tr" + del_id).remove();
+					}
+				});
+			}
+			return false;
+		})
+	})
+</script>
+
+<span class="title">List data</span>
+<span class="controller" style="float: right;">
+                        <ul>
+	                        <li><a href="<?php echo $url ?>group/insert">Thêm</a></li>
+                        </ul>
+                    </span>
+</div>
+<?php
+?>
+<br class="clear">
+<div class="content" id="page">
+	<form method="post" action="" name="form_data">
+		<div id="view">
+			<table width="100%" cellspacing="0" cellpadding="0" class="data">
+				<thead>
+				<tr>
+					<th style="width:5%">STT</th>
+					<th style="width:30%">
+						name
+					</th>
+					<th style="width:30%">Option</th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php $i=1;
+				if ($groupList != null) {
+					foreach ($groupList as $one) {
+						?>
+						<tr id = "<?php echo 'tr'.$one->idgroup?>">
+							<td><?php echo $i;?></td>
+							<td>
+								<input id="<?php echo $one->idgroup?>" class="change" type="text"
+								       value="<?php echo $one->name ?>"></td>
+							</td>
+							<td>
+								<a href="<?php echo $url ?>users/config/<?php echo $one->idgroup?>"><img title="Edit" class="help" alt="edit"
+								                                  src="/images/icon_setup.png"></a>
+								<a class="detele_group" del_id = "<?php echo $one->idgroup?>"><img class="help" title="Delete" class="help" alt="delete"
+								                src="/images/icon_delete.png"></a>
+							</td>
+						</tr>
+					<?php $i++;}
+				} else echo 'No data' ?>
+				</tbody>
+			</table>
+		</div>
+	</form>
+	<!-- End pagination -->
+</div>
+
+
+<!--</div>-->
+<!--<!-- End one column window -->
+<!--</div>-->

@@ -1,0 +1,5 @@
+{
+  "require": {
+    "phpsec/phpsec":"0.6.*"
+  }
+}

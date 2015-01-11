@@ -1,0 +1,145 @@
+<html>
+<head>
+	<?php $url = "http://local.tutorial/"; ?>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<title>WeAdmin | Dashboard</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+	<link media="all" type="text/css" rel="stylesheet" href="<?php echo $url ?>css/green/screen.css">
+	<link media="all" type="text/css" rel="stylesheet" href="<?php echo $url ?>css/green/datepicker.css">
+	<link media="all" type="text/css" rel="stylesheet" href="<?php echo $url ?>css/tipsy.css">
+	<link media="all" type="text/css" rel="stylesheet" href="<?php echo $url ?>js/visualize/visualize.css">
+	<link media="all" type="text/css" rel="stylesheet" href="<?php echo $url ?>js/jwysiwyg/jquery.wysiwyg.css">
+	<link media="all" type="text/css" rel="stylesheet" href="<?php echo $url ?>js/fancybox/jquery.fancybox-1.3.0.css">
+	<link media="all" type="text/css" rel="stylesheet" href="<?php echo $url ?>css/tipsy.css">
+	<script src="<?php echo $url ?>js/jquery.min.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" href="<?php echo $url ?>css/jquery-ui.css">
+	<script src="<?php echo $url ?>js/jquery.js"></script>
+	<script src="<?php echo $url ?>js/jquery-ui-1.8.15.custom.min.js"></script>
+
+	<script src="<?php echo $url ?>js/xuly.js"></script>
+	<!--	<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">-->
+
+	<!--	tab-->
+	<link href='<?php echo $url ?>css/animate.min.css' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="<?php echo $url ?>css/style.css"/>
+<style>
+	img.help{
+		width: 20px;
+		height: 20px;
+		margin-right: 5px;
+	}
+	img.imgsize{
+		width: 40px;
+	}
+</style>
+
+</head>
+<body>
+<div class="content_wrapper">
+	<div id="header">
+		<div id="logo">
+			<img alt="logo" src="<?php echo $url ?>images/logo.png">
+		</div>
+		<div id="account_info">
+			<img class="mid_align" alt="Online" src="<?php echo $url ?>images/1408455811_user-admin.png">
+			Hello <a href=""><?php if($this->session->get("username")) echo $this->session->get("username") ?></a> | <a href="">Setting</a> | <a
+				href="<?php echo $url . 'users/logout' ?>">Logout</a>
+		</div>
+		<form method="post" action="<?php echo $url?>users/list">
+			<div style="float: right; margin-top: 10px; margin-right: 40px">
+				<input type="text" name="search" placeholder="Tìm tên nhân viên">
+				<input type="submit" name="submit_search" value="search">
+			</div>
+		</form>
+	</div>
+	<div id="left_menu">
+		<ul id="main_menu" class="ui-accordion ui-widget ui-helper-reset" role="tablist">
+			<li class="ui-accordion-li-fix"><a href="<?php echo $url ?>"
+			                                   class="ui-accordion-header ui-helper-reset ui-state-active ui-corner-top"
+			                                   role="tab" aria-expanded="true" tabindex="0"><span
+						class="ui-icon ui-icon-triangle-1-s"></span><img alt="Home"
+			                                                             src="<?php echo $url ?>images/icon_home.png">Home</a>
+			</li>
+			<li class="ui-accordion-li-fix">
+				<a href="<?php echo $url ?>category"
+				   class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab"
+				   aria-expanded="false" tabindex="-1"><span class="ui-icon ui-icon-triangle-1-e"></span><img
+						alt="Posts" src="<?php echo $url ?>images/icon_posts.png">Posts</a>
+			</li>
+			<li class="ui-accordion-li-fix">
+				<a href="<?php echo $url . "users/list" ?>"
+				   class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab"
+				   aria-expanded="false" tabindex="-1"><span class="ui-icon ui-icon-triangle-1-e"></span><img
+						alt="Users" src="<?php echo $url ?>images/icon_users.png">Users</a>
+			</li>
+		</ul>
+		<br class="clear">
+		<script>
+			$(function () {
+				$(".datepicker_insert").datepicker();
+			});
+		</script>
+		<!-- Begin left panel calendar -->
+		<div class="datepicker_insert"></div>
+		<!-- End left panel calendar -->
+	</div>
+	<!--left_menu-->
+	<div id="content">
+		<div class="inner">
+			<br class="clear">
+
+			<ul id="shortcut">
+				<li>
+					<a title="Trang chủ" id="shortcut_home" href="<?php echo $url ?>">
+						<img class="imgsize" alt="home" src="/images/1408455567_property.png"><br>
+						<strong>Home</strong>
+					</a>
+				</li>
+				<!--				--><?php //if ($prole == 5) { ?>
+				<li>
+					<a title="Cấu hình chung" href="<?php echo $url ?>group/index">
+						<img class="imgsize" alt="setting" src="/images/1408455628_secure_search_config.png"><br>
+						<strong>Cấu hình</strong>
+					</a>
+				</li>
+				<li>
+					<a original-title="Liên hệ" id="shortcut_contacts" href="<?php echo $url ?>role">
+						<img class="imgsize" alt="contacts" src="/images/icon_permission.png"><br>
+						<strong>Pquyền</strong>
+					</a>
+				</li>
+				<li>
+					<a original-title="Liên hệ" id="shortcut_contacts" href="<?php echo $url ?>key/edit">
+						<img class="imgsize" alt="contacts" src="/images/1408454953_folder_edit.png"><br>
+						<strong>Sửa TT</strong>
+					</a>
+				</li>
+				<li>
+					<a original-title="Liên hệ" id="shortcut_contacts" href="http://test.tamtay.vn">
+						<img class="imgsize" alt="contacts" src="/images/1408455117_domain.png"><br>
+						<strong>Test</strong>
+					</a>
+				</li>
+				<li>
+					<a original-title="Liên hệ" id="shortcut_contacts" href="<?php echo $url?>admin/reset">
+						<img class="imgsize" alt="contacts" src="/images/1408455040_POWER - RESTART.png"><br>
+						<strong>Reset</strong>
+					</a>
+				</li>
+			</ul>
+			<br class="clear">
+			<!-- Begin one column window -->
+			<div class="onecolumn">
+				<div class="">
+					<?php echo $this->getContent() ?>
+					<div id="footer">
+						&copy; Copyright by Trang.uet54@gmail.com
+					</div>
+				</div>
+				<!--content-->
+			</div>
+			<!--content_wrapper-->
+</body>
+</html>

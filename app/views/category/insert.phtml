@@ -1,0 +1,26 @@
+<div class="">
+	<span class="title"></span>
+                    <span class="controller" style="float: right;">
+                        <ul>
+	                        <li><a href="<?php echo $url?>/category">Quay lại</a></li>
+                        </ul>
+                    </span>
+</div>
+<style>
+	p {
+		width: 100px;
+		float: left;
+		margin-left: 10px;
+		font-weight: bold;
+	}
+</style>
+<form method="post">
+	<br class="clear">
+
+	<p>Name cate:</p>
+	<?= $this->tag->textField(array('name' => 'name', 'size' => 50, 'id' => 'name')) ?>
+	<br>
+	<?= $this->tag->submitButton(array("name" => "submit", 'value' => 'Create')) ?>
+	<div class="chart_wrapper" id="chart_wrapper"></div>
+	<!-- End bar chart table-->
+</form>

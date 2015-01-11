@@ -1,0 +1,59 @@
+<?php
+
+//print_r($config);
+?>
+
+<span class="title">List data</span>
+<span class="controller" style="float: right;">
+                        <ul>
+	                        <li><a href="<?php echo $url ?>users/insert">Thêm</a></li>
+	                        <li><a href="#">Xóa</a></li>
+	                        <li><a href="#">Bật</a></li>
+	                        <li><a href="#">Tắt</a></li>
+                        </ul>
+                    </span>
+</div>
+<?php
+?>
+<br class="clear">
+<div class="content" id="page">
+	<form method="post" action="" name="form_data">
+		<div id="view">
+			<table width="100%" cellspacing="0" cellpadding="0" class="data">
+				<thead>
+				<tr>
+					<th style="width:10px">
+						<input type="checkbox" name="check_all" id="check_all">
+					</th>
+					<th style="width:30%">UserName</th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php
+				if ($groupList != null) {
+					foreach ($groupList as $one) {
+						?>
+						<tr>
+							<td>
+								<a href="<?php echo $url ?>users/config/<?php echo $one->idgroup ?>"><?php echo $one->name ?></a>
+							</td>
+							<td>
+								<a href="<?php echo $url ?>"><img title="Edit" class="help" alt="edit"
+								                                  src="images/icon_edit.png"></a>
+								<a href=""><img title="Delete" class="help" alt="delete"
+								                src="images/icon_delete.png"></a>
+							</td>
+						</tr>
+					<?php }
+				} else echo 'No data' ?>
+				</tbody>
+			</table>
+		</div>
+	</form>
+	<!-- End pagination -->
+</div>
+
+
+<!--</div>-->
+<!--<!-- End one column window -->
+<!--</div>-->

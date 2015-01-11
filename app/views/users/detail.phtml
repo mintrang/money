@@ -1,0 +1,148 @@
+<style>
+	p {
+		width: 100px;
+		float: left;
+		margin-left: 10px;
+		font-weight: bold;
+		margin-top: 13px;
+	}
+
+	.avatar {
+		float: right;
+		width: 200px;
+	}
+</style>
+<span class="title">Thông tin cá nhân</span>
+<span class="controller" style="float: right;">
+                        <ul>
+	                        <li>
+		                        <a href="<?php echo $url ?>users/insert<?php if (isset($roomid)) echo '/' . $roomid; ?>">Thêm</a>
+	                        </li>
+                        </ul>
+                    </span>
+</div>
+<br class="clear">
+<div class="content" id="page" style="height: 1000px">
+	<?php if (isset($img)) { ?>
+		<img class="avatar" src="/upload/<?php echo $img ?>">
+	<?php } ?>
+	<form method="post" enctype="multipart/form-data" id="form_product_create">
+		<ul class="tabs">
+			<li>
+				<input type="radio" checked name="tabs" id="tab1">
+				<label for="tab1">Thông tin chung</label>
+
+				<div id="tab-content1" class="tab-content animated fadeIn">
+					<p>
+						username</p><?= $this->tag->textField(array('value' => $user->username, 'size' => "27", 'name' => 'name', 'id' => 'name')) ?>
+					<i class="error" style="color: red"><?php if (isset($nameExist)) echo $nameExist; ?></i>
+					<i class="error" style="color: red"><?php if (isset($msg['name'])) echo $msg['name']; ?></i>
+					<br/>
+
+					<p>
+						address</p><?= $this->tag->textField(array('value' => $user->address, 'size' => "27", 'name' => 'address', 'id' => 'name')) ?>
+					<br/>
+
+
+					<p>Email</p>
+					<?= $this->tag->textField(array('name' => 'email', 'size' => 27, 'id' => 'email', 'value' => $user->email)) ?>
+					<i class="error" style="color: red"><?php if (isset($emailExist)) echo $emailExist; ?></i>
+					<i class="error" style="color: red"><?php if (isset($msg['email'])) echo $msg['email']; ?></i>
+					<br>
+
+					<p>
+						fullname</p><?= $this->tag->textField(array('name' => 'fullname', 'size' => "27", 'id' => 'fullname', 'value' => $user->fullname)) ?>
+					<i class="error" style="color: red"><?php if (isset($msg['fullname'])) echo $msg['fullname']; ?></i>
+					<br/>
+
+					<p>
+						Phone</p><?= $this->tag->textField(array('name' => 'phone', 'size' => "27", 'id' => 'phone', 'value' => $user->phone)) ?>
+					<i class="error" style="color: red"><?php if (isset($msg['phone'])) echo $msg['phone']; ?></i>
+					<br/>
+
+					<p>
+						password</p><?= $this->tag->passwordField(array('size' => "27", 'name' => 'password', 'id' => 'password', 'value' => $user->password)) ?>
+					<i class="error" style="color: red"><?php if (isset($msg['password'])) echo $msg['password']; ?></i>
+					<br/>
+
+					<p>
+						re-password</p><?= $this->tag->passwordField(array('size' => "27", 'name' => 're-password', 'id' => 'password', 'value' => $user->password)) ?>
+					<i class="error" style="color: red"><?php if (isset($match)) echo $match ?></i>
+					<br/>
+
+					<p>Birth Day</p>
+					<input type="text" class="datepicker_insert" size="27" name="birthday"
+					       value="<?php echo $user->birthday ?>">
+					<br/>
+
+					<p>Start job</p>
+					<input type="text" class="datepicker_insert" size="27" name="start_job"
+					       value="<?php echo $user->start_job ?>">
+					<br/>
+
+					<p>End job</p>
+					<input type="text" class="datepicker_insert" size="27" name="end"
+					       value="<?php echo $user->end_job ?>">
+					<br/>
+
+					<p>Room</p>
+					<select name="idroom">
+						<?php foreach ($roomListx as $room) { ?>
+							<option
+								value="<?php echo $room->idlevel ?>" <?php foreach($select as $sl) {
+								if($sl->idlevel == $room->idlevel) echo 'selected';
+							}?>><?php echo $room->phong ?></option>
+						<?php } ?>
+					</select><br/>
+
+					<p>Chức vụ</p>
+					<select name="chucvu[]" multiple>
+						<?php foreach ($chucvu as $cv) { ?>
+							<option
+								value="<?php echo $cv->idchucvu ?>" <?php  foreach ($select as $s) {
+								if ($s->idchucvu == $cv->idchucvu) echo 'selected';
+							}?>><?php echo $cv->name ?></option>
+						<?php } ?>
+					</select><br/>
+
+					<p>Group</p>
+					<select name="idgroup[]" multiple>
+						<?php foreach ($groupList as $group) { ?>
+							<option <?php
+							foreach ($listGroup as $l) {
+								if ($l->idgroup == $group->idgroup) echo 'selected';
+							}
+							?>
+								value="<?php echo $group->idgroup ?>"><?php echo $group->name ?></option>
+						<?php } ?>
+					</select>
+					<br/>
+					<?= $this->tag->submitButton(array("name" => "submit", 'value' => 'Create')) ?>
+				</div>
+			</li>
+			<li>
+				<input type="radio" name="tabs" id="tab2">
+				<label for="tab2">Thông tin Log</label>
+
+				<div id="tab-content2" class="tab-content animated fadeIn">
+					<ul>
+						<?php
+						if (count($listTbl2)) {
+							$i = 1;
+							foreach ($listTbl2 as $log) {
+								?>
+								<li style="float: none" class="<?php echo "tr" . $log->idlog ?>">
+									<?php echo $i ?><a del_id="<?php echo $log->idlog ?>" class="detele_user">delete</a>
+									<?= Phalcon\Tag::textArea(array("detail_$log->idlog", "cols" => 100, "rows" => 10, 'value' => $log->detail, 'readonly' => 'readonly')) ?>
+								</li>
+								<?php $i++;
+							} ?>
+							<li><?= $this->tag->submitButton(array("name" => "log", 'value' => 'Create')) ?></li>
+						<?php } else echo 'NO DATA FOR LOG' ?>
+
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</form>
+</div>

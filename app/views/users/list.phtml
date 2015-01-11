@@ -1,0 +1,148 @@
+<?php if (isset($config) && $config != null) { ?>
+	<span class="title">List data</span>
+	<span class="controller" style="float: right;">
+                        <ul>
+	                        <li>
+		                        <a href="<?php echo $url ?>users/insert<?php if (isset($roomid)) echo '/' . $roomid; ?>">Thêm</a>
+	                        </li>
+	                        <li><a class="del_all">Xóa</a></li>
+	                        <li><a href="#">Bật</a></li>
+	                        <li><a href="#">Tắt</a></li>
+                        </ul>
+                    </span>
+	</div>
+	<?php
+	?>
+	<br class="clear">
+	<div class="content" id="page">
+		<script>
+			$(function () {
+				$('#check_all').live("click", function (event) {  //on click;
+					if (this.checked) { // check select status
+						$('.check').each(function () { //loop through each checkbox
+							this.checked = true;  //select all checkboxes with class "checkbox1"
+						});
+					} else {
+						$('.check').each(function () { //loop through each checkbox
+							this.checked = false; //deselect all checkboxes with class "checkbox1"
+						});
+					}
+				});
+				$('.pag').click(function () {
+					var url = "http://local.tutorial/admin/listx/" + "<?php if(!isset($idRoom)) $idRoom = 0; echo $idRoom.'/';?>" + $(this).val();
+					console.log(url);
+					$.ajax({
+						type: 'GET',
+						timeout: 7000,
+						url: url,
+						success: function (msg) {
+							console.log(msg);
+							$("#view").html(msg);
+
+						}
+					});
+				});
+				$(".detele_user").live("click", function () {
+					var del_id = $(this).attr("del_id");
+					var info = {'id': del_id};
+					var url = "http://local.tutorial/users/delete";
+					console.log("delete: tr" + del_id);
+					if (confirm("Are you sure to delete?")) {
+						$.ajax({
+							type: "POST",
+							url: url,
+							data: info,
+							success: function (kq) {
+								console.log("kq" + kq);
+								$("#tr" + del_id).remove();
+							}
+						});
+					}
+					return false;
+				})
+				$(".del_all").live("click", function () {
+					var checkbox = [];
+//				var ids = '';
+					var remove = [];
+					var url = "http://local.tutorial/admin/deleteAll";
+					$('input[type="checkbox"]:checked').each(function () {
+						checkbox.push($(this).val());
+//					ids += $(this).attr('checkbox_id') + ",";
+						remove.push($(this).attr('checkbox_id'));
+
+					});
+					var a = remove.join(',');
+
+					var info = {'id': a};
+					console.log(a);
+					if (confirm("Are you sure to delete?")) {
+						$.ajax({
+							type: 'POST',
+							url: url,
+							data: info,
+							success: function () {
+								for (i = 0; i < remove.length; i++)
+									$("#tr" + remove[i]).remove();
+								$(".check").attr('checked', false);
+							}
+						})
+					}
+				});
+			});
+		</script>
+<!--		--><?php //var_dump($config); ?>
+		<form method="post" action="" name="form_data">
+			<div id="view">
+				<table width="100%" cellspacing="0" cellpadding="0" class="data">
+					<thead>
+					<tr>
+						<th style="width:3%">STT</th>
+						<th style="width:5%"><input type="checkbox" id="check_all"></th>
+						<th>Chức vụ</th>
+						<?php foreach ($config as $key => $value) { ?>
+							<th style="width:10%"><?php echo $key ?></th>
+						<?php } ?>
+						<th style="width:30%">Edit</th>
+					</tr>
+					</thead>
+					<tbody>
+					<?php $i = 1;
+					foreach ($list->items as $one) { ?>
+						<tr id=<?php echo 'tr' . $one->idusers ?>>
+							<td><?php echo $i; ?></td>
+							<td><input type="checkbox" class="check" checkbox_id="<?php echo $one->idusers ?>"></td>
+							<td>
+								<?php foreach($chucvu as $c) {
+									if($c->idusers == $one->idusers) echo $c->name;?>
+								<?php } ?>
+							</td>
+							<?php foreach ($config as $k => $v) {?>
+								<td><?php echo $one->$k ?></td>
+							<?php } ?>
+							<td>
+								<a href="<?php echo $url ?>users/detail/<?php echo $one->idusers ?>"><img title="Edit" class="help" alt="edit"
+								                                                                          src="/images/icon_detail.png"></a>
+								<a del_id="<?php echo $one->idusers ?>" class="detele_user"><img title="Edit" class="help" alt="edit"
+								                                                                 src="/images/icon_delete.png"></a>
+								<a href="<?php echo $url ?>log/index/<?php echo $one->idusers ?>"><img title="Edit" class="help" alt="edit"
+								                                                                       src="/images/icon_log.png"></a>
+								<a href="<?php echo $url ?>UserAtribute/insert/<?php echo $one->idusers ?>"><img title="Edit" class="help" alt="edit"
+								                                                                                 src="/images/icon_more.png"></a>
+							</td>
+						</tr>
+						<?php $i++;
+					} ?>
+					</tbody>
+				</table>
+			</div>
+			<div class="chart_wrapper" id="chart_wrapper"></div>
+			<?php if ($list->total_pages > 1) { ?>
+				<div class="pagination">
+					<?php for ($i = 1; $i <= $list->total_pages; $i++) { ?>
+						<input type="button" value="<?php echo $i ?>" class="pag"/>
+					<?php } ?>
+				</div>
+			<?php } ?>
+		</form>
+	</div>
+<?php } else echo '<h2>Contact admin to see! </h2>' ?>

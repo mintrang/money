@@ -1,0 +1,76 @@
+<?php //if ($config != null) { ?>
+<span class="title">List data</span>
+<span class="controller" style="float: right;">
+                        <ul>
+	                        <li>
+		                        <a href="<?php echo $url ?>users/insert<?php if (isset($roomid)) echo '/' . $roomid; ?>">Thêm</a>
+	                        </li>
+	                        <li><a class="del_all">Xóa</a></li>
+	                        <li><a href="#">Bật</a></li>
+	                        <li><a href="#">Tắt</a></li>
+                        </ul>
+                    </span>
+</div>
+<?php
+?>
+<br class="clear">
+<div class="content" id="page">
+	<?php //var_dump($list)?>
+	<form method="post" action="" name="form_data">
+		<div id="view">
+			<table width="100%" cellspacing="0" cellpadding="0" class="data">
+				<thead>
+				<tr>
+					<th style="width:3%">STT</th>
+					<th style="width:5%"><input type="checkbox" id="check_all"></th>
+					<th style="width:5%">Username</th>
+					<th style="width:5%">Fullname</th>
+					<th style="width:5%">Address</th>
+					<th style="width:5%">Phone</th>
+					<th style="width:5%">Chuc vu</th>
+					<th style="width:5%">Phong</th>
+					<th style="width:5%">Birthday</th>
+					<th style="width:5%">Start</th>
+					<th style="width:5%">End</th>
+					<th style="width:5%">Edit</th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php $i = 1;
+				foreach ($list as $one) {
+					?>
+					<tr id=<?php echo 'tr' . $one->idusers ?>>
+						<td><?php echo $i; ?></td>
+						<td><input type="checkbox" class="check" checkbox_id="<?php echo $one->idusers ?>"></td>
+						<td><?php echo $one->username ?></td>
+						<td><?php echo $one->fullname ?></td>
+						<td><?php echo $one->address ?></td>
+						<td><?php echo $one->phone ?></td>
+						<td><?php echo $one->chucvu ?></td>
+						<td><?php echo $one->nameroom ?></td>
+						<td><?php echo $one->birthday ?></td>
+						<td><?php echo $one->start_job ?></td>
+						<td><?php echo $one->end_job ?></td>
+						<td>
+							<a href="<?php echo $url ?>users/detail/<?php echo $one->idusers ?>"><img title="Edit"
+							                                                                          class="help"
+							                                                                          alt="edit"
+							                                                                          src="/images/icon_detail.png"></a>
+							<a del_id="<?php echo $one->idusers ?>" class="detele_user"><img title="Edit" class="help"
+							                                                                 alt="edit"
+							                                                                 src="/images/icon_delete.png"></a>
+							<a href="<?php echo $url ?>log/index/<?php echo $one->idusers ?>"><img title="Edit"
+							                                                                       class="help"
+							                                                                       alt="edit"
+							                                                                       src="/images/icon_log.png"></a>
+							<a href="<?php echo $url ?>UserAtribute/insert/<?php echo $one->idusers ?>"><img
+									title="Edit" class="help" alt="edit"
+									src="/images/icon_more.png"></a>
+						</td>
+					</tr>
+					<?php $i++;
+				} ?>
+				</tbody>
+			</table>
+		</div>
+</div>

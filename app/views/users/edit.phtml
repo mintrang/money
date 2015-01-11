@@ -1,0 +1,84 @@
+<div class="">
+	<span class="title"></span>
+                    <span class="controller" style="float: right;">
+                        <ul>
+	                        <li><a href="#">Quay lại</a></li>
+                        </ul>
+                    </span>
+</div>
+<style>
+	p {
+		width: 100px;
+		float: left;
+		margin-left: 10px;
+		font-weight: bold;
+	}
+</style>
+<script>
+	$(function () {
+		$(".datepicker_insert").datepicker();
+	});
+</script>
+<?php
+
+?>
+<form method="post">
+	<br class="clear">
+
+	<p>Username:</p>
+	<?= $this->tag->textField(array('value'=>$user->username,'name' => 'name', 'size' => 50, 'id' => 'name')) ?>
+
+	<br>
+
+	<p>Email</p>
+	<?= $this->tag->textField(array('name' => 'email', 'size' => 50, 'id' => 'email','value'=>$user->email)) ?>
+	<br>
+
+	<p>Password</p>
+	<?= $this->tag->passwordField(array('name' => 'password', 'size' => 50, 'id' => 'password','value'=>$user->password)) ?>
+	<br>
+	<p>Re-Password</p>
+	<?= $this->tag->passwordField(array('name' => 'password', 'size' => 50, 'id' => 'password','value'=>$user->password)) ?>
+	<br>
+	<p>Phone</p>
+	<?= $this->tag->textField(array('name' => 'phone', 'size' => 50, 'id' => 'phone','value'=>$user->phone)) ?>
+	<br>
+
+	<p>Full Name</p>
+	<?= $this->tag->textField(array('name' => 'fullname', 'size' => 50, 'id' => 'fullname','value'=>$user->fullname)) ?>
+	<br>
+
+	<p>Sex</p>
+	Name: <input type="radio" value="1" name="sex" <?php if($user->sex ==1) echo 'checked'?>>
+	Nu: <input type="radio" value="0" name="sex" <?php if($user->sex ==0) echo 'checked'?>>
+	<br>
+
+	<p>End job</p>
+	<input type="text" class="datepicker_insert" size="27" name="start_job" value="<?php echo $user->start_job?>">
+	<br/>
+
+	<p>End job</p>
+	<input type="text" class="datepicker_insert" size="27" name="end" value="<?php echo $user->end_job?>">
+	<br/>
+<!--	vao phong truoc roi thi k can show, khi chua bt phong nao ms can show-->
+		<p>Room</p>
+		<select name="idroom">
+			<?php foreach ($roomList as $room) { ?>
+				<option value="<?php echo $room->idroom ?>" <?php if($user->idroom == $room->idroom) echo 'selected'?>><?php echo $room->name ?></option>
+			<?php } ?>
+		</select>
+
+	<br>
+
+	<p>Group</p>
+	<select name="idgroup">
+
+		<?php foreach ($groupList as $group) { ?>
+			<option <?php if($user->idgroup == $group->idgroup) echo 'selected'?> value="<?php echo $group->idgroup ?>"><?php echo $group->name ?></option>
+		<?php } ?>
+	</select>
+	<br>
+	<?= $this->tag->submitButton(array("name" => "submit", 'value' => 'Create')) ?>
+	<div class="chart_wrapper" id="chart_wrapper"></div>
+	<!-- End bar chart table-->
+</form>

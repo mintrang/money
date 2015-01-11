@@ -1,0 +1,114 @@
+<style>
+	.inputNew {
+		background: url("../../images/bg_ip.png") repeat-x scroll 0 0 #ffffff;
+		border: 1px solid #c0c0c0;
+		color: #000000;
+		font-size: 12px;
+		font-weight: bold;
+		margin-bottom: 0;
+		margin-left: 0;
+		margin-right: 0;
+		margin-top: 5px !important;
+		padding: 5px;
+		width: 235px;
+	}
+</style>
+<script>
+	$(function () {
+		$('.add_atribute').click(function () {
+			$(".form_product_create .add_file").append('<tr class="itemss"><td><input class="inputNew" type="input" name="keyPost"></td>'
+				+ '<td><a class="removee" >Remove</a></td></tr>');
+		})
+		$(".detele_user").live("click", function () {
+			var del_id = $(this).attr("del_id");
+			var info = {'id': del_id};
+
+			var url = "http://local.t/admin/deleteKey";
+
+			if (confirm("Are you sure to delete?")) {
+				$.ajax({
+					type: "POST",
+					url: url,
+					data: info,
+					success: function (kq) {
+						$("#tr" + del_id).remove();
+					}
+				});
+			}
+			return false;
+		})
+		$('.change').live("change", function () {
+			var value = $(this).val();
+			var key = $(this).attr('id');
+			var info = {'value': value, 'key': key}
+			var url = "http://local.tutorial/key/edit";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: info,
+				success: function (kq) {
+
+				}
+			});
+		})
+		$('.inputNew').live('change', function () {
+			var input = $(this).val();
+			var info = {'key':input}
+			var url = "http://local.tutorial/key/insert";
+			console.log(input);
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: info,
+				success: function (kq) {
+//					$('.removee').addClass('detele_user');
+//					$(".removee").html('delete');
+//					$(this).removeClass('.removee')
+				}
+			});
+
+		})
+		$('.removee').live('click', function () {
+			$(this).parents('.itemss').remove();
+
+		})
+	});
+</script>
+<span class="title">List data</span>
+<span class="controller" style="float: right;">
+                        <ul>
+	                        <li>
+		                        <a class="add_atribute" sl="1" onclick="add_file()">Thêm</a>
+	                        </li>
+	                        <li><a class="del_all">Xóa</a></li>
+	                        <li><a href="#">Bật</a></li>
+	                        <li><a href="#">Tắt</a></li>
+                        </ul>
+                    </span>
+</div>
+<br class="clear">
+<div class="content" id="page">
+	<form method="post" action="" name="form_data" class="form_product_create">
+		<!--		<div class="add_file"></div>-->
+		<table width="100%" cellspacing="0" cellpadding="0" class="data">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Xoa</th>
+			</tr>
+			</thead>
+			<tbody>
+			<?php foreach ($listKey as $key) { ?>
+				<tr id="<?php echo "tr$key->idkey" ?>">
+					<td><?= $this->tag->textField(array('value' => $key->name, 'class' => "change", 'size' => 30, 'id' => $key->idkey)) ?></td>
+					<td><a class="detele_user removee" del_id="<?php echo $key->idkey ?>"><img src="/images/icon_delete.png" alt="edit" class="help" title="Edit"></a></td>
+				</tr>
+			<?php } ?>
+			</tbody>
+			<tbody class="add_file">
+
+			</tbody>
+		</table>
+
+	</form>
+</div>

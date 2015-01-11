@@ -1,0 +1,34 @@
+<span class="title"><?php echo($nameCate->name); ?></span>
+<div class="">
+	<span class="title"></span>
+                    <span class="controller" style="float: right;">
+                        <ul>
+	                        <li><a href="#">Quay lại</a></li>
+                        </ul>
+                    </span>
+</div>
+<style>
+	p {
+		width: 100px;
+		float: left;
+		margin-left: 10px;
+		font-weight: bold;
+	}
+</style>
+<div class="content" id="page">
+	<form method="post">
+		<br class="clear">
+
+		<p>Nội dung:</p>
+		<?= Phalcon\Tag::textArea(array("comments", "cols" => 100, "rows" => 20)) ?>
+		<br>
+
+		<p>Hiển thị đến</p>
+		<input type="text" class="datepicker_insert" size="27" name="end">
+		<br/>
+		<?= Phalcon\Tag::hiddenField(array("start", "value" => date('Y-m-d'))); ?>
+		<?= $this->tag->submitButton(array("name" => "submit", 'value' => 'Create')) ?>
+		<div class="chart_wrapper" id="chart_wrapper"></div>
+		<!-- End bar chart table-->
+	</form>
+</div>

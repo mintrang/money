@@ -1,0 +1,73 @@
+<style>
+	.inputNew {
+		background: url("../../images/bg_ip.png") repeat-x scroll 0 0 #ffffff;
+		border: 1px solid #c0c0c0;
+		color: #000000;
+		font-size: 12px;
+		font-weight: bold;
+		margin-bottom: 0;
+		margin-left: 0;
+		margin-right: 0;
+		margin-top: 5px !important;
+		padding: 5px;
+	}
+</style>
+<script>
+	//    $("a").removeAttr("href");
+	function add_file() {
+		var sl = parseInt($("#form_product_create .add_images").attr('sl'));
+		if (sl < 10) {
+			sl++;
+			val_radio = sl ;
+			$("#form_product_create .add_file").append('Tên thuộc tính<input class="inputNew" type="input" name="keyPost[]" value="'+val_radio+'">'
+			+'<input class="type" name ="valuePost[]"  size="50" type="file" of = "'+val_radio+'"/><br/>'
+			);
+			$("#form_product_create .add_images").removeAttr('sl');
+			$("#form_product_create .add_images").attr('sl', '' + sl + '');
+		} else {
+			alert('Must be lower 10');
+		}
+	}
+</script
+<span class="title">Thêm thuộc tính</span>
+<span class="controller" style="float: right;">
+                        <ul>
+	                        <li>
+		                        <a href="<?php echo $url ?>users/insert<?php if (isset($roomid)) echo '/' . $roomid; ?>">Thêm</a>
+	                        </li>
+                        </ul>
+                    </span>
+</div>
+<br class="clear">
+<div class="content" id="page">
+	<form method="post" enctype="multipart/form-data" id="form_product_create">
+		<table class="tabs">
+			<tr>
+				<th>
+					<input type="radio" checked name="tabs" id="tab1">
+					<label for="tab1">File</label>
+
+					<div id="tab-content1" class="tab-content animated fadeIn">
+						Tên thuộc tính<input type="text" name="keyPost[]" value="1">
+						<input class="typeFile" type="file" of="1" name="valuePost[]">
+						<input type="button" class="add_images" sl="1" onclick="add_file() " value="Add"/><br/>
+
+						<div class="add_file"></div>
+					</div>
+				</th>
+				<th>
+					<input type="radio" name="tabs" id="tab3">
+					<label for="tab3">Text</label>
+
+					<div id="tab-content3" class="tab-content animated fadeIn">
+						Tên thuộc tính<input type="text" name="key">
+						<input class="typeText" type="text">
+						<input type="button" class="add_images" sl="1" onclick="add_text() " value="Add"/><br/>
+
+						<div class="add_text"></div>
+					</div>
+				</th>
+			</tr>
+		</table>
+	</form>
+</div>

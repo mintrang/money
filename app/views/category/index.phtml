@@ -1,0 +1,83 @@
+<style>
+	table.data input {
+		background: none !important;
+		border: 1px solid #ffffff !important;
+		outline: none;
+	}
+</style>
+<script>
+	$(document).ready(function () {
+		$('.change').live("change", function () {
+			var value = $(this).val();
+			var key = $(this).attr('id');
+
+			var url = "http://local.tutorial/category/edit";
+
+			var info = {'value': value, 'key': key}
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: info,
+				success: function (kq) {
+				}
+			});
+		});
+		$(".delete_category").live("click", function () {
+			var del_id = $(this).attr("del_id");
+			var info = {'id': del_id};
+			var url = "http://local.tutorial/category/delete";
+			console.log("delete: tr" + del_id);
+			if (confirm("Are you sure to delete?")) {
+				$.ajax({
+					type: "POST",
+					url: url,
+					data: info,
+					success: function (kq) {
+						console.log("kq" + kq);
+						$("#tr" + del_id).remove();
+					}
+				});
+			}
+			return false;
+		})
+	})
+</script>
+<span class="title">List data</span>
+<div class="">
+	<span class="title"></span>
+                    <span class="controller" style="float: right;">
+                        <ul>
+	                        <li><a href="<?php echo $url?>/category/insert">Thêm</a></li>
+                        </ul>
+                    </span>
+</div>
+<br class="clear">
+<div class="content" id="page">
+	<form method="post" action="" name="form_data">
+		<div id="view">
+			<table width="100%" cellspacing="0" cellpadding="0" class="data">
+				<thead>
+				<tr>
+					<th style="width:5%">STT</th>
+					<th style="width:20%">Name</th>
+					<th style="width:30%">Post/delete</th>
+				</tr>
+				</thead>
+				<?php $i = 1;
+				foreach ($listCate as $cate) { ?>
+					<tr id="<?php echo 'tr'.$cate->idcategory?>">
+						<td><?php echo $i ?></td>
+						<td><input id="<?php echo $cate->idcategory ?>" class="change" type="text"
+						           value="<?php echo $cate->name ?>"></td>
+						<td><a  href="<?php echo $url?>category/post/<?php echo $cate->idcategory?>"><img src="/images/insert_object.png" alt="insert post" class="help" title="insert post"></a>
+							<a class="delete_category" del_id="<?php echo $cate->idcategory ?>" class="detele_user"><img src="/images/icon_delete.png" alt="Delete" class="help" title="delete"></a>
+						</td>
+					</tr>
+					<?php $i++;
+				} ?>
+				<tbody>
+			</table>
+		</div>
+		<div class="chart_wrapper" id="chart_wrapper"></div>
+	</form>
+</div>

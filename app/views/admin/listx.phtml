@@ -1,0 +1,42 @@
+<?php if (isset($config) && $config != null) { ?>
+	<table width="100%" cellspacing="0" cellpadding="0" class="data">
+		<thead>
+		<tr>
+			<th style="width:3%">STT</th>
+			<th style="width:5%"><input type="checkbox" id="check_all"></th>
+			<th>Chức vụ</th>
+			<?php foreach ($config as $key => $value) { if($value != 'chucvu') {?>
+				<th style="width:10%"><?php echo $key ?></th>
+			<?php } }?>
+			<th>Chức vụ</th>
+			<?php foreach ($config as $key => $value) { ?>
+				<th style="width:10%"><?php echo $key ?></th>
+			<?php } ?>
+			<th style="width:30%">Edit</th>
+		</tr>
+		</thead>
+		<tbody>
+
+		<?php
+
+		$i = 1;
+		foreach ($list->items as $one) {
+			?>
+			<tr id=<?php echo 'tr' . $one->idusers ?>>
+				<td><?php echo $i; ?></td>
+				<td><input type="checkbox" class="check" checkbox_id="<?php echo $one->idusers ?>"></td>
+				<?php foreach ($config as $k => $v) { if($k != 'chucvu') {?>
+					<td><?php echo $one->$k ?></td>
+				<?php } }?>
+				<td>
+					<a href="<?php echo $url ?>users/detail/<?php echo $one->idusers ?>">detail/</a>
+					<a del_id="<?php echo $one->idusers ?>" class="detele_user">delete/</a>
+					<a href="<?php echo $url ?>log/index/<?php echo $one->idusers ?>">Log/</a>
+					<a href="<?php echo $url ?>UserAtribute/insert/<?php echo $one->idusers ?>">More</a>
+				</td>
+			</tr>
+			<?php $i++;
+		} ?>
+		</tbody>
+	</table>
+<?php } else echo 'Contact admin to see!' ?>

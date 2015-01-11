@@ -1,0 +1,109 @@
+<div class="">
+	<span class="title"></span>
+                    <span class="controller" style="float: right;">
+                        <ul>
+	                        <li><a href="#">Quay lại</a></li>
+                        </ul>
+                    </span>
+</div>
+<style>
+	p {
+		width: 100px;
+		float: left;
+		margin-left: 10px;
+		font-weight: bold;
+	}
+
+	.requried {
+		color: red;
+	}
+</style>
+<script>
+	$(function () {
+		$(".datepicker_insert").datepicker();
+	});
+</script>
+<form method="post">
+	<br class="clear">
+
+	<p>Username:</p>
+
+	<?= $this->tag->textField(array('name' => 'name', 'size' => 50, 'id' => 'name')) ?>&nbsp
+	<span class="requried">*</span>
+	<i class="error" style="color: red"><?php if (isset($existName)) echo $existName; ?></i>
+	<i class="error" style="color: red"><?php if (isset($msg['name'])) echo $msg['name']; ?></i>
+	<br>
+
+	<p>Address:</p>
+
+	<?= $this->tag->textField(array('name' => 'address', 'size' => 50, 'id' => 'name')) ?>&nbsp
+<!--	<span class="requried">*</span>-->
+<!--	<i class="error" style="color: red">--><?php //if (isset($existName)) echo $existName; ?><!--</i>-->
+<!--	<i class="error" style="color: red">--><?php //if (isset($msg['name'])) echo $msg['name']; ?><!--</i>-->
+	<br>
+
+	<p>Email</p>
+
+	<?= $this->tag->textField(array('name' => 'email', 'size' => 50, 'id' => 'email')) ?>&nbsp<span
+		class="requried">*</span>
+	<i class="error" style="color: red"><?php if (isset($existEmail)) echo $existEmail; ?></i>
+	<i class="error" style="color: red"><?php if (isset($msg['email'])) echo $msg['email']; ?></i>
+	<br>
+
+	<p>Password</p>
+	<input type="text" name="password" id="password" value="123456" disabled size="50">
+	&nbsp<span class="requried">*</span>
+	<i class="error" style="color: red"><?php if (isset($msg['password'])) echo $msg['password']; ?></i>
+	<br>
+
+	<p>Phone</p>
+
+	<?= $this->tag->textField(array('name' => 'phone', 'size' => 50, 'id' => 'phone')) ?>&nbsp<span
+		class="requried">*</span>
+	<i class="error" style="color: red"><?php if (isset($msg['phone'])) echo $msg['phone']; ?></i>
+	<br>
+
+	<p>Full Name</p>
+
+	<?= $this->tag->textField(array('name' => 'fullname', 'size' => 50, 'id' => 'fullname')) ?>&nbsp<span
+		class="requried">*</span>
+	<i class="error" style="color: red"><?php if (isset($msg['fullname'])) echo $msg['fullname']; ?></i>
+	<br>
+
+	<p>Start job</p>
+	<input type="text" class="datepicker_insert" size="27" name="start">
+	<br>
+
+	<p>Birth Day</p>
+	<input type="text" class="datepicker_insert" size="27" name="birthday">
+	<br/>
+	<!--	vao phong truoc roi thi k can show, khi chua bt phong nao ms can show-->
+<!--	--><?php //if (!isset($xeko)) { ?>
+		<p>Room</p>
+		<select name="idroom">
+			<?php foreach ($r as $room) { ?>
+				<option value="<?php echo $room->idlevel ?>"><?php echo $room->phong ?></option>
+			<?php } ?>
+		</select>
+<!--	--><?php //} ?>
+	<br>
+	<p>Chức vụ</p>
+	<select name="chucvu[]" multiple>
+		<?php foreach($chucvu as $chuc) {?>
+		<option value="<?php echo $chuc->idchucvu?>"><?php echo $chuc->name?></option>
+		<?php } ?>
+	</select>
+	<br/>
+	<p>Group</p>
+	<select name="idgroup[]" multiple>
+
+		<?php foreach ($groupList as $group) { ?>
+			<option <?php if ($group->idgroup == 1) echo 'selected' ?>
+				value="<?php echo $group->idgroup ?>"><?php echo $group->name ?></option>
+		<?php } ?>
+	</select>
+	<br>
+	<?= $this->tag->submitButton(array("name" => "submit", 'value' => 'Create')) ?>
+	<div class="chart_wrapper" id="chart_wrapper"></div>
+	<!-- End bar chart table-->
+</form>

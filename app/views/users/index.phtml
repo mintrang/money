@@ -1,0 +1,116 @@
+<style>
+	table.data input {
+		background: none !important;
+		border: 1px solid #ffffff !important;
+		outline: none;
+	}
+</style>
+<script>
+	$(document).ready(function () {
+		$('.change').live("change", function () {
+			var value = $(this).val();
+			var key = $(this).attr('id');
+
+			var url = "http://local.tutorial/room/edit";
+
+			var info = {'value': value, 'key': key}
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: info,
+				success: function (kq) {
+				}
+			});
+		});
+		$(".detele_room").live("click", function () {
+			var url = 'http://local.tutorial/room/delete';
+			var del_id = $(this).attr("del_id");
+			var info = {'id': del_id};
+			console.log("delete: tr" + del_id);
+			if (confirm("Are you sure to delete?")) {
+				$.ajax({
+					type: "POST",
+					url: url,
+					data: info,
+					success: function (kq) {
+						console.log("kq" + kq);
+						$("#tr" + del_id).remove();
+					}
+				});
+			}
+			return false;
+		})
+	})
+</script>
+<span class="title">List Room</span>
+<span class="controller" style="float: right;">
+                        <ul>
+	                        <li>
+		                        <a href="<?php echo $url ?>room/insert">Thêm</a>
+	                        </li>
+                        </ul>
+                    </span>
+</div>
+<?php
+?>
+<br class="clear">
+<div class="content">
+	<form method="post" action="" name="form_data" id="form_data">
+		<table width="100%" cellspacing="0" cellpadding="0" class="data">
+			<thead>
+			<tr>
+				<th style="width:3px">
+					STT
+				</th>
+				<th style="width:30%">Tên phòng</th>
+				<th style="width:20%">Cap tren</th>
+				<th style="width:30%">Thao tác</th>
+
+			</tr>
+			</thead>
+			<tbody>
+			<?php $i = 1;
+			foreach ($roomList as $one) {
+				?>
+				<tr id="<?php echo 'tr' . $one->idlevel ?>">
+					<td>
+						<?php echo $i ?>
+					</td>
+					<td><input id="<?php echo $one->idlevel ?>" class="change" type="text"
+					           value="<?php echo $one->phong ?>"></td>
+					<td>
+						<?php foreach ($a as $key=>$val) {
+							if ($key== $one->parent) echo $val ?>
+						<?php } ?>
+
+					</td>
+					<td>
+						<a class="detele_room" del_id= <?php echo $one->idlevel ?>><img title="Edit" class="help"
+						                                                                alt="delete"
+						                                                                src="/images/icon_delete.png"></a>
+						<a href="<?php echo $url ?>users/list/<?php echo $one->idlevel ?>"><img title="Edit"
+						                                                                        class="help"
+						                                                                        alt="detail"
+						                                                                        src="/images/icon_detail.png"></a>
+					</td>
+				</tr>
+				<?php $i++;
+			} ?>
+			</tbody>
+		</table>
+		<div class="chart_wrapper" id="chart_wrapper" style="border: 1px solid #dedede">
+			<h2>Bản tin nội bộ - Chuyên mục: <?php echo $name ?></h2>
+
+			<h2></h2>
+			<i><?php echo $start ?></i>
+
+			<p><?php echo $detail ?></p>
+			<a href="<?php echo $url ?>post">Xem toàn bộ thông tin</a>
+		</div>
+		<!-- End bar chart table-->
+	</form>
+	<div class="pagination">
+
+	</div>
+	<!-- End pagination -->
+	<!--</div>-->

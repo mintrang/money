@@ -1,0 +1,60 @@
+<script>
+	$(function () {
+		$('.my_select').change(function () {
+			var selectVal = [];
+			var ids = [];
+			var id = $(this).attr('select_id');
+			var select = $(this).val();
+			$('.my_select :selected').each(function () {
+				selectVal.push($(this).val());
+				ids.push($(this).attr('select_id'));
+			});
+			var info = {
+				'select': select,
+				'id': id
+			};
+			var url = "http://local.tutorial/users/config/<?php echo $dhs?>";
+			console.log(url);
+			$.ajax({
+				type: 'POST',
+				url: url,
+				data: info,
+				success: function ($msg) {
+					console.log(info);
+				}
+			})
+		});
+	});
+</script>
+<span class="title">List Config</span>
+<br class="clear">
+<form method="post" action="" name="form_data" id="form_data">
+	<div class="content">
+		<table width="100%" cellspacing="0" cellpadding="0" class="data">
+			<thead>
+			<tr>
+				<th style="width:30%">Name</th>
+				<th style="width:20%">Config</th>
+			</tr>
+			</thead>
+			<tbody>
+
+			<?php
+			if ($status != null) {
+				foreach ($status as $key => $value) {
+					?>
+					<tr id= <?php echo $key ?>>
+						<td><?php echo $key ?></td>
+						<td>
+							<select name="status[]" class="my_select" select_id= <?php echo $key ?>>
+								<option value="1" <?php if ($value == 1) echo 'selected' ?>>Show</option>
+								<option value="0" <?php if ($value == 0) echo 'selected' ?>>Hide</option>
+							</select>
+						</td>
+					</tr>
+				<?php }
+			} else echo 'no data' ?>
+			</tbody>
+		</table>
+	</div>
+</form>
